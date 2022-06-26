@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-2">
+    <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <!-- !LEFT MENU ITEMS -->
+            {% for item in left_menu %}
+            <li class="nav-item">
+                {% if selected_category == item.title %}
+                <div class="nav-link text-success">{{ item }}</div>
+                {% else %}
+                <a class="nav-link text-white" href="/catalogue/{{ item }}">{{ item }}</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            <!-- ! -->
+        </ul>
+    </div>
+    </nav>
+</div>
+<!-- CONTENT -->
+<div class="col-md-9">
+    <div class="row" id="products-list">
+        {% for item in products %}
+        <div class="col-10 col-sm-5 col-md-4 col-lg-3 mt-3 h-25">
+            <div class="thumbnail product-item h-100">
+                <a class="nav-link border h-100 mw-100" href="{% url 'product_details' %}?product={{item.title}}">
+                    <div class="h-75 d-flex align-items-center justify-content-center" >
+                        {% comment %} <img class="h-auto mw-100" src="/media/${item.image}"> {% endcomment %}
+                        <img class="mw-100" height=200px src="{{item.image}}">
+                    </div>
+                    <button class="container-fluid border bg-dark text-white text-center"><h5>{{ item.title }}</h5=></button>
+                    <h4 class="text-end">{{ item.cost }} грн</h4>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<link href="{% static 'catalogue/css/styles.css' %}" rel="stylesheet" type="text/css">
+
+{% comment %} TODO: Переделать. Думаю можно сделать гараздо лучше {% endcomment %}
+{% comment %} <script language="JavaScript" type="text/javascript">
+    function load_data() {   
+                $.ajax({
+                        type: 'GET',
+                        url: '{% url 'loadview' %}', 
+                        dataType: "json",
+                        data: {
+                            // высота экрана делится на 150% высоты элемента без остатка * кол-во элементов в строке 
+                            'value': (window.screen.height/(200*1.5)|0) * ((window.screen.width > 768)?4:2),
+                            {% if selected_category %}
+                            'category': "{{ selected_category }}"
+                            {% endif %}
+                        },  //Здесь можно передать данные в GET запросе, например сколько значений получить 
+{% comment %} {% url 'atb' %}?item=${item.title} 
+                        success: function(products) {
+                            products.items.forEach(item => $('#products-list').append(`
+                            <div class="col-10 col-sm-5 col-md-4 col-lg-3 mt-3 h-25">
+                                <div class="thumbnail product-item h-100">
+                                    <a class="nav-link border h-100 mw-100" href="{% url 'product_details' %}?product=${item.title}">
+                                        <div class="h-75 d-flex align-items-center justify-content-center" >
+                                            {% comment %} <img class="h-auto mw-100" src="/media/${item.image}"> 
+                                            <img class="mw-100" height=200px src="${item.image}">
+                                        </div>
+                                        <button class="container-fluid border bg-dark text-white text-center"><h5>${ item.title }</h5=></button>
+                                        <h4 class="text-end">${ item.cost } грн</h4>
+                                    </a>
+                                </div>
+                            </div>`))
+                        },
+                    }); 
+    }
+</script> {% endcomment %}
+{% comment %} Call load_data() {% endcomment %}
+<script language="JavaScript" type="text/javascript" src="{% static 'catalogue/js/init.js' %}"></script>
+
+
+{% endblock %}

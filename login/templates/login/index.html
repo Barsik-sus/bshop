@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    min-height: 200px;
+    border-radius: 10px;
+    padding: 40px;
+    box-sizing: border-box
+}
+
+.user {
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 20px
+}
+
+.loginBox h3 {
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center
+}
+
+.loginBox input {
+    width: 100%;
+    margin-bottom: 20px
+}
+
+.loginBox input[type="text"],
+.loginBox input[type="password"] {
+	opacity:0.9;
+    border: none;
+    border-bottom: 2px solid green;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+    padding-left: 20px;
+    box-sizing: border-box
+}
+
+.loginBox input[type="text"]:hover,
+.loginBox input[type="password"]:hover {
+    border: 1px solid white;
+}
+
+.inputBox {
+    position: relative
+}
+
+.inputBox span {
+    position: absolute;
+    top: 10px;
+}
+
+a:hover {
+	color: red !important;
+} 
+
+</style>
+<div class="bg-dark text-white loginBox"> <img class="user" src="https://i.ibb.co/yVGxFPR/2.png" height="100px" width="100px">
+    <h3>{{ title }}</h3>
+    <form method="post">
+        <div class="inputBox"> 
+            {% csrf_token %}
+            {{ user_form.username }}
+            {{ user_form.password }}
+            {{ user_form.password2 }}
+		</div>
+        {% if status %}
+        <div class="container text-danger">
+        {{ status }}
+        </div>
+        {% endif %}
+		<input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="" value="{% if dologin %}Login {% else %} Sign-Up{% endif %}">
+    </form> 
+    <div class="mt-4 text-center">
+		{% if dologin %}
+		<a class="nav-link" href="#fp">Forget Password<br> </a>
+        <a class="nav-link" style="color: #98BB98;" href="{% url 'sign_up' %}">Sign-Up</a>
+		{% else %}
+        <a class="nav-link" style="color: #59238F;" href="{% url 'login' %}">Login</a>
+		{% endif %}
+    </div>
+</div>
+{% endblock content %}

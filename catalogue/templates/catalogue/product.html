@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="col-md-10 offset-md-1 bg-light">
+    <h3 class="card-header">{{ product.title }}</h3>
+    <br>
+    <div class="row">
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <img class="mw-100" src="{{ product.image }}"></img>
+        </div>
+        <div class="col-md-6">
+            <h5>Цена: {{ product.cost }}</h5>
+            <h5>Описание:</h5>
+            <div style="-moz-hyphens: auto;-webkit-hyphens: auto;-ms-hyphens: auto;">
+            {{ product.description|striptags|addslashes|linebreaks }}
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="m-4 d-flex justify-content-end nav-item">
+        <a class="btn nav-link bg-dark text-light" href="{% url 'atb' %}?item={{product.title}}">Добавить в корзину</a>
+    </div>
+    {{count}}
+</div>
+{% endblock content %}

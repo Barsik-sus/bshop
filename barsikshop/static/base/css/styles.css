@@ -1,0 +1,12 @@
+.nav-item a:hover
+{
+    color: red !important;
+}
+#basket-items
+{
+    display: none;
+}
+.basket:hover #basket-items
+{
+    display:block !important;
+}
